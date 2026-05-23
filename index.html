@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minerva Finance</title>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/DtLW1Ae.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0d0f;
+      --surface:   #141417;
+      --surface2:  #1a1a1f;
+      --border:    rgba(255,255,255,0.07);
+      --green:     #22c55e;
+      --green-lt:  #4ade80;
+      --text:      #f0f0f2;
+      --muted:     #71717a;
+      --radius:    16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(13,13,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo img { width: 32px; height: 32px; border-radius: 8px; }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: #050f09;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 10px 20px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--green-lt); }
+    .nav-cta svg { width: 16px; height: 16px; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 24px 80px;
+    }
+
+    .hero-inner { max-width: 720px; }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6.5vw, 4.6rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.7s 0.1s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    .hero h1 .accent { color: var(--green); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      color: #a1a1aa;
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 0 auto 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s 0.25s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s 0.4s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    .hero-preview {
+      margin-top: 72px;
+      opacity: 0;
+      transform: translateY(28px) scale(0.97);
+      animation: fadeUp 0.8s 0.6s cubic-bezier(.22,1,.36,1) forwards;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green);
+      color: #050f09;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 15px 30px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--green-lt); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary svg { width: 20px; height: 20px; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Sora', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 15px 24px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.18); }
+
+    /* ── PHONE MOCKUP ── */
+    .phone-mockup {
+      width: 260px;
+      margin: 0 auto;
+      background: #18181b;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.09);
+      padding: 20px 16px;
+      box-shadow: 0 32px 64px rgba(0,0,0,0.5);
+    }
+
+    .msg-row { display: flex; margin-bottom: 10px; }
+    .msg-row.right { justify-content: flex-end; }
+
+    .msg-bubble {
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      max-width: 85%;
+    }
+    .msg-bubble.bot {
+      background: #27272a;
+      color: #e4e4e7;
+      border-bottom-left-radius: 4px;
+    }
+    .msg-bubble.user {
+      background: #7c3aed;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .msg-bubble .label {
+      font-size: 0.65rem;
+      color: var(--green-lt);
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .msg-bubble .amount {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--green-lt);
+    }
+
+    .progress-bar-wrap { margin-top: 8px; }
+    .progress-bar-track {
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      width: 62%;
+      background: var(--green);
+      border-radius: 99px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+      font-size: 0.62rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* ── LAYOUT BASE ── */
+    section { position: relative; }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .section-body {
+      font-size: 1.05rem;
+      color: #a1a1aa;
+      line-height: 1.7;
+    }
+
+    /* ── ANIMAÇÕES DE SCROLL ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* Estados iniciais dos elementos animados por scroll */
+    .anim-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s cubic-bezier(.22,1,.36,1),
+                  transform 0.65s cubic-bezier(.22,1,.36,1);
+    }
+    .anim-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .anim-left {
+      opacity: 0;
+      transform: translateX(-28px);
+      transition: opacity 0.65s cubic-bezier(.22,1,.36,1),
+                  transform 0.65s cubic-bezier(.22,1,.36,1);
+    }
+    .anim-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .anim-right {
+      opacity: 0;
+      transform: translateX(28px);
+      transition: opacity 0.65s cubic-bezier(.22,1,.36,1),
+                  transform 0.65s cubic-bezier(.22,1,.36,1);
+    }
+    .anim-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .anim-scale {
+      opacity: 0;
+      transform: scale(0.94);
+      transition: opacity 0.6s cubic-bezier(.22,1,.36,1),
+                  transform 0.6s cubic-bezier(.22,1,.36,1);
+    }
+    .anim-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* delay helpers */
+    .d1 { transition-delay: 0.05s; }
+    .d2 { transition-delay: 0.12s; }
+    .d3 { transition-delay: 0.19s; }
+    .d4 { transition-delay: 0.26s; }
+    .d5 { transition-delay: 0.33s; }
+    .d6 { transition-delay: 0.40s; }
+
+    /* ── PROBLEM ── */
+    .problem {
+      padding: 100px 0 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .problem-text h2 { margin-bottom: 16px; }
+
+    .problem-note {
+      margin-top: 28px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+      border-left: 2px solid rgba(255,255,255,0.1);
+      padding-left: 16px;
+      max-width: 420px;
+    }
+
+    .stat-list { display: grid; gap: 2px; }
+
+    .stat-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+    }
+
+    .stat-item .num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-item p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .features-header { margin-bottom: 48px; }
+    .features-header .section-body { max-width: 480px; margin-top: 12px; }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .feat-card {
+      background: var(--surface);
+      padding: 28px 24px;
+      transition: background 0.2s;
+    }
+    .feat-card:hover { background: var(--surface2); }
+
+    .feat-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .feat-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .how-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .how-text h2 { margin-bottom: 36px; }
+
+    .steps { display: grid; }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: 'DM Mono', monospace;
+      flex-shrink: 0;
+      color: var(--muted);
+    }
+
+    .step-content h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; }
+    .step-content p { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+
+    /* Resumo card */
+    .resumo-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 20px 48px rgba(0,0,0,0.35);
+    }
+
+    .resumo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .resumo-header .title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .resumo-header .period {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+
+    .resumo-rows { display: grid; gap: 14px; }
+
+    .resumo-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .resumo-row .label {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.85rem; color: #a1a1aa;
+    }
+    .resumo-row .label .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .resumo-row .value {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+    .resumo-row .value.income { color: var(--green-lt); }
+    .resumo-row .value.expense { color: #f87171; }
+    .resumo-row .value.invest { color: #818cf8; }
+
+    .resumo-divider { height: 1px; background: var(--border); margin: 8px 0; }
+
+    .resumo-saldo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 4px;
+    }
+    .resumo-saldo .label { font-size: 0.9rem; font-weight: 700; }
+    .resumo-saldo .amount {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .resumo-meta {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .resumo-meta .meta-title {
+      font-size: 0.73rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .resumo-meta .meta-bar-track {
+      height: 4px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .resumo-meta .meta-bar-fill {
+      height: 100%;
+      width: 0;
+      background: var(--green);
+      border-radius: 99px;
+      transition: width 1s 0.3s cubic-bezier(.22,1,.36,1);
+    }
+    .resumo-meta .meta-bar-fill.grown { width: 68%; }
+    .resumo-meta .meta-labels {
+      display: flex; justify-content: space-between;
+      margin-top: 5px;
+      font-size: 0.65rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* ── DEPOIMENTOS ── */
+    .testimonials {
+      padding: 80px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .testimonials h2 { margin-bottom: 8px; }
+
+    .testimonials .subtitle {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 48px;
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .testi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .testi-rating {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .testi-text {
+      font-size: 0.88rem;
+      color: #d4d4d8;
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .testi-author { display: flex; align-items: center; gap: 10px; }
+
+    .testi-avatar {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.78rem;
+      flex-shrink: 0;
+      color: var(--muted);
+    }
+
+    .testi-name { font-size: 0.82rem; font-weight: 600; }
+    .testi-role { font-size: 0.73rem; color: var(--muted); }
+
+    /* ── CTA FINAL ── */
+    .cta-final {
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .cta-final-inner { max-width: 520px; margin: 0 auto; }
+
+    .cta-final h2 {
+      font-size: clamp(1.8rem, 4.5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .cta-final p {
+      font-size: 1rem;
+      color: #a1a1aa;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .cta-free-note { margin-top: 14px; font-size: 0.8rem; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    footer .logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.88rem; font-weight: 700;
+      color: var(--muted);
+    }
+    footer .logo img { width: 22px; height: 22px; border-radius: 6px; }
+
+    footer p { font-size: 0.78rem; color: var(--muted); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .problem-grid { grid-template-columns: 1fr; gap: 40px; }
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .how-inner { grid-template-columns: 1fr; gap: 40px; }
+      .testi-grid { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 14px 20px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim-up, .anim-left, .anim-right, .anim-scale {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .hero h1, .hero-sub, .hero-actions, .hero-preview {
+        opacity: 1;
+        transform: none;
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">
+      <img src="logo.jpg" alt="Minerva" onerror="this.style.display='none'" />
+      Minerva Finance
+    </a>
+    <a class="nav-cta" href="https://t.me/minervafinance_bot" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      Abrir no Telegram
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Você sabe pra onde<br>o seu <span class="accent">dinheiro</span> vai?</h1>
+      <p class="hero-sub">A maioria das pessoas não sabe. E esse é o primeiro passo pra começar a poupar e investir de verdade.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="https://t.me/minervafinance_bot" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          Começar agora
+        </a>
+        <a class="btn-ghost" href="#como-funciona">Como funciona</a>
+      </div>
+
+      <div class="hero-preview">
+        <div class="phone-mockup">
+          <div class="msg-row">
+            <div class="msg-bubble bot">
+              <span class="label">✅ Gasto registrado</span>
+              📌 iFood<br>
+              💸 <span class="amount">R$ 47,90</span>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill"></div>
+                </div>
+                <div class="progress-label">
+                  <span>Meta mensal</span>
+                  <span>62%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="msg-row right">
+            <div class="msg-bubble user">/resumo mes</div>
+          </div>
+          <div class="msg-row">
+            <div class="msg-bubble bot">
+              <span class="label">📅 Resumo de Maio</span>
+              💰 Receitas: <strong>R$ 3.200</strong><br>
+              💸 Gastos: <strong style="color:#f87171">R$ 1.847</strong><br>
+              📈 Invest.: <strong style="color:#818cf8">R$ 500</strong><br>
+              🟢 Saldo: <strong style="color:#4ade80">R$ 853</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="container">
+      <div class="problem-grid">
+        <div class="problem-text anim-left">
+          <h2 class="section-title">Sem controle, não tem sobra</h2>
+          <p class="section-body">Não é falta de dinheiro. Na maioria das vezes é falta de visibilidade. Quando você não sabe onde gasta, não tem como decidir onde cortar ou onde investir.</p>
+          <p class="problem-note">A Minerva não te diz o que fazer. Ela só mostra o que você já faz. Muitas vezes isso já é o suficiente pra mudar de comportamento.</p>
+        </div>
+        <div class="stat-list">
+          <div class="stat-item anim-up d1">
+            <div class="num" style="color:#f87171">+R$ 300</div>
+            <p>é a média de quanto as pessoas subestimam os próprios gastos quando estimam de cabeça</p>
+          </div>
+          <div class="stat-item anim-up d2">
+            <div class="num" style="color:#fbbf24">30 dias</div>
+            <p>costuma ser o tempo pra você enxergar um padrão claro nos gastos depois que começa a registrar</p>
+          </div>
+          <div class="stat-item anim-up d3">
+            <div class="num" style="color:var(--green)">1 comando</div>
+            <p>é tudo que você precisa pra registrar qualquer gasto. Sem formulário, sem categoria obrigatória.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <div class="features-header anim-up">
+        <h2 class="section-title">Tudo no Telegram,<br>sem instalar nada</h2>
+        <p class="section-body">A Minerva vive onde você já está. Uma mensagem e pronto.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feat-card anim-up d1">
+          <h3>Registro de gastos</h3>
+          <p>Nome, valor e uma nota de 1 a 5 sobre se valeu a pena. Em 10 segundos, no meio do dia, sem abrir nenhum app.</p>
+        </div>
+        <div class="feat-card anim-up d2">
+          <h3>Controle de receitas</h3>
+          <p>Salário, freela, renda extra. Tudo entra no controle pra você ver exatamente quanto sobrou no mês.</p>
+        </div>
+        <div class="feat-card anim-up d3">
+          <h3>Investimentos</h3>
+          <p>Registre o que você está guardando. Sem precisar abrir a corretora toda vez.</p>
+        </div>
+        <div class="feat-card anim-up d4">
+          <h3>Metas</h3>
+          <p>Defina quanto quer gastar ou investir. O bot avisa quando você está chegando no limite, antes de estourar.</p>
+        </div>
+        <div class="feat-card anim-up d5">
+          <h3>Relatórios</h3>
+          <p>Resumos semanais, mensais ou anuais na hora. Sem planilha, sem app extra, sem exportar CSV pra lugar nenhum.</p>
+        </div>
+        <div class="feat-card anim-up d6">
+          <h3>Ranking de gastos</h3>
+          <p>Veja onde você mais gasta e a nota que você mesmo deu pra cada coisa. Às vezes a resposta surpreende.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="como-funciona">
+    <div class="container">
+      <div class="how-inner">
+        <div class="how-text anim-left">
+          <h2 class="section-title">Simples como mandar uma mensagem</h2>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">01</div>
+              <div class="step-content">
+                <h4>Abre o bot no Telegram</h4>
+                <p>Sem cadastro, sem senha, sem download. Só clicar em iniciar.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">02</div>
+              <div class="step-content">
+                <h4>Registra o primeiro gasto</h4>
+                <p>Manda /gasto e segue o fluxo. Leva menos de 30 segundos.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">03</div>
+              <div class="step-content">
+                <h4>Define uma meta se quiser</h4>
+                <p>Quanto quer gastar no mês? A Minerva te avisa antes de passar.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">04</div>
+              <div class="step-content">
+                <h4>Pede o resumo quando quiser</h4>
+                <p>/resumo e pronto. Semanal, mensal ou anual.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="resumo-card anim-right">
+          <div class="resumo-header">
+            <span class="title">Resumo</span>
+            <span class="period">01/05 a 23/05/2026</span>
+          </div>
+          <div class="resumo-rows">
+            <div class="resumo-row">
+              <span class="label"><span class="dot" style="background:#4ade80"></span>Receitas</span>
+              <span class="value income">+ R$ 3.200,00</span>
+            </div>
+            <div class="resumo-row">
+              <span class="label"><span class="dot" style="background:#f87171"></span>Gastos</span>
+              <span class="value expense">- R$ 1.847,30</span>
+            </div>
+            <div class="resumo-row">
+              <span class="label"><span class="dot" style="background:#818cf8"></span>Investimentos</span>
+              <span class="value invest">- R$ 500,00</span>
+            </div>
+          </div>
+          <div class="resumo-divider"></div>
+          <div class="resumo-saldo">
+            <span class="label">Saldo</span>
+            <span class="amount">R$ 852,70</span>
+          </div>
+          <div class="resumo-meta">
+            <div class="meta-title">Meta de gastos do mês</div>
+            <div class="meta-bar-track">
+              <div class="meta-bar-fill" id="metaBar"></div>
+            </div>
+            <div class="meta-labels">
+              <span>R$ 1.847 / R$ 2.700</span>
+              <span>68%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title anim-up">O que as pessoas falam</h2>
+      <p class="subtitle anim-up d1">Nem todos perfeitos. Mas todos reais.</p>
+      <div class="testi-grid">
+
+        <div class="testi-card anim-up d1">
+          <div class="testi-rating">★★★★★ &nbsp;5/5</div>
+          <p class="testi-text">Tentei umas tres vezes fazer planilha antes. Desistia sempre depois de uma semana. Com o bot pelo menos consigo manter porque nao precisa abrir nada, mando uma mensagem e pronto.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">LC</div>
+            <div>
+              <div class="testi-name">Lucas C.</div>
+              <div class="testi-role">Designer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card anim-up d2">
+          <div class="testi-rating">★★★★☆ &nbsp;4/5</div>
+          <p class="testi-text">Funciona bem pra registrar no dia a dia. Ainda sinto falta de ver um grafico visual do mes, mas o resumo em texto ja ajuda bastante. Uso todo dia.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">AM</div>
+            <div>
+              <div class="testi-name">Ana M.</div>
+              <div class="testi-role">Professora</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card anim-up d3">
+          <div class="testi-rating">★★★★★ &nbsp;5/5</div>
+          <p class="testi-text">A nota de utilidade mudou como eu penso antes de comprar. Fica na cabeca a pergunta: isso vale quanto pra mim? Parece bobo mas funciona.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">RF</div>
+            <div>
+              <div class="testi-name">Rafael F.</div>
+              <div class="testi-role">Desenvolvedor</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final">
+    <div class="cta-final-inner anim-up">
+      <h2>O primeiro passo e saber<br>onde voce esta</h2>
+      <p>Nao precisa de planilha, nao precisa de app. A Minerva mora no Telegram e esta pronta pra comecar agora.</p>
+      <a class="btn-primary" href="https://t.me/minervafinance_bot" target="_blank" style="font-size:1.05rem;padding:17px 34px">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:22px;height:22px"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Abrir a Minerva no Telegram
+      </a>
+      <p class="cta-free-note">Gratuito. Sem cadastro, sem cartao.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="logo">
+      <img src="logo.jpg" alt="Minerva" onerror="this.style.display='none'" />
+      Minerva Finance
+    </div>
+    <p>Feito pra quem quer entender o proprio dinheiro.</p>
+    <a
+      href="https://instagram.com/gabriel_kwl"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="
+        font-size: 0.72rem;
+        color: var(--muted);
+        text-decoration: none;
+        opacity: 0.55;
+        transition: opacity 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      "
+      onmouseover="this.style.opacity='0.9'"
+      onmouseout="this.style.opacity='0.55'"
+      title="Desenvolvedor"
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:12px;height:12px;flex-shrink:0"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      gabriel_kwl
+    </a>
+  </footer>
+
+  <script>
+    // Scroll animations com Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+
+          // Anima a barra de progresso do resumo quando entrar em view
+          if (entry.target.classList.contains('anim-right')) {
+            const bar = document.getElementById('metaBar');
+            if (bar) setTimeout(() => bar.classList.add('grown'), 400);
+          }
+
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.anim-up, .anim-left, .anim-right, .anim-scale')
+      .forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

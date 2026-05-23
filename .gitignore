@@ -1,0 +1,25 @@
+# Banco de dados — NUNCA suba ao GitHub (contém dados dos usuários)
+*.db
+*.db-shm
+*.db-wal
+
+# Arquivos de configuração da plataforma de hospedagem
+.shardcloud
+.deps_cache
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+
+# Logs
+*.log
+
+# Sistema
+.DS_Store
+Thumbs.db
